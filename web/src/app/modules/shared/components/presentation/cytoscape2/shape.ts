@@ -1,6 +1,6 @@
 
 export abstract class BaseShape {
-  protected constructor(public id: string) {
+  protected constructor(public id: string, public kind: string) {
   }
 
   toNode(shapes: BaseShape[]) {}
@@ -12,7 +12,7 @@ export class Edge extends BaseShape {
                   public sourceId: string,
                   public targetId: string,
                   public classes?: string ) {
-    super(id);
+    super(id, 'Edge');
   }
 
   toNode(shapes: BaseShape[]) {
@@ -43,13 +43,14 @@ export abstract class Shape extends BaseShape {
   element: any;
 
   constructor(id: string,
+              kind: string,
               public label: string,
               public width: any,
               public height: any,
               public shape: string,
               public hasChildren: boolean,
               public parentId?: string) {
-    super(id);
+    super(id, kind);
   }
 
   abstract preferredPosition(): {x: number, y: number};
@@ -138,11 +139,30 @@ export abstract class Shape extends BaseShape {
       classes: this.classes
     }
   }
+
+  static fromDataStream(id: string, data: any):BaseShape{
+    switch (data.kind) {
+      case "Service": return new Service(id, data.kind, false);
+      case "ReplicaSet": return new ReplicaSet(id, data.kind, false);
+      case "ServiceAccount": return new ServiceAccount(id, data.kind, false);
+      case "Secret": return new Secret(id, data.kind, false);
+      case "Pod": return new Pod(id, data.kind, false);
+      case "Deployment": return new Deployment(id, data.kind, false);
+    }
+  }
+
+  static findByKind(shapes: BaseShape[], kind: string ):BaseShape[] {
+    return shapes.filter( shape => (shape.kind === kind))
+  }
+
+  static findById(shapes: Shape[], id: string ):Shape[] {
+    return shapes.filter( shape => (shape.id === id))
+  }
 }
 
 export class Deployment extends Shape {
   constructor(id: string, label: string, hasChildren: boolean, parentId?: string) {
-    super(id, label, 800, 600, 'rectangle', hasChildren, parentId);
+    super(id, 'Deployment', label, 800, 600, 'rectangle', hasChildren, parentId);
     this.classes= 'deployment';
   }
 
@@ -158,7 +178,7 @@ export class Deployment extends Shape {
 
 export class Secret extends Shape {
   constructor(id: string, label: string, hasChildren: boolean, parentId?: string) {
-    super(id, label, 350, 200, 'roundrectangle', hasChildren, parentId);
+    super(id, 'Secret', label, 350, 200, 'roundrectangle', hasChildren, parentId);
     this.classes= 'secret';
   }
 
@@ -169,7 +189,7 @@ export class Secret extends Shape {
 
 export class ServiceAccount extends Shape {
   constructor(id: string, label: string, hasChildren: boolean, parentId?: string) {
-    super(id, label, 350, 200, 'roundrectangle', hasChildren, parentId);
+    super(id, 'ServiceAccount', label, 350, 200, 'roundrectangle', hasChildren, parentId);
     this.classes= 'secret';
   }
 
@@ -180,7 +200,7 @@ export class ServiceAccount extends Shape {
 
 export class Service extends Shape {
   constructor(id: string, label: string, hasChildren: boolean, parentId?: string) {
-    super(id, label, 350, 200, 'roundrectangle', hasChildren, parentId);
+    super(id, 'Service', label, 350, 200, 'roundrectangle', hasChildren, parentId);
     this.classes= 'secret';
   }
 
@@ -191,7 +211,7 @@ export class Service extends Shape {
 
 export class ReplicaSet extends Shape {
   constructor(id: string, label: string, hasChildren: boolean, parentId?: string) {
-    super(id, label, 600, 400, 'rectangle', hasChildren, parentId);
+    super(id, 'ReplicaSet', label, 600, 400, 'rectangle', hasChildren, parentId);
     this.classes= 'replicaset';
   }
 
@@ -202,7 +222,7 @@ export class ReplicaSet extends Shape {
 
 export class Pod extends Shape {
   constructor(id: string, label: string, hasChildren: boolean, parentId?: string) {
-    super(id, label, 350, 200, 'roundrectangle', hasChildren, parentId);
+    super(id, 'Pod', label, 350, 200, 'roundrectangle', hasChildren, parentId);
     this.classes= 'pod';
   }
 
@@ -213,7 +233,7 @@ export class Pod extends Shape {
 
 export class Port extends Shape {
   constructor(id: string, label: string, public location: string, className: string, parentId?: string) {
-    super(id, label, 'label', 'label', 'rectangle', false, parentId);
+    super(id, 'Port', label, 'label', 'label', 'rectangle', false, parentId);
     this.classes= className;
   }
 

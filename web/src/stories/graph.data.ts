@@ -20,6 +20,7 @@ export const ELEMENTS_STYLE = [
       'text-halign': 'center',
       'text-margin-y': 20,
       'padding': '10px',
+      'z-index': 1,
     },
   },
 
@@ -67,6 +68,7 @@ export const ELEMENTS_STYLE = [
       'font-size': 24,
       'text-margin-y': 30,
       'border-width': 1.5,
+      'z-index': 3,
     },
   },
   {
@@ -90,6 +92,7 @@ export const ELEMENTS_STYLE = [
       'text-margin-y': 38,
       'border-style': 'dashed',
       'border-width': 3,
+      'z-index': 2,
     },
   },
   {
@@ -97,12 +100,14 @@ export const ELEMENTS_STYLE = [
     css: {
       'background-color': '#13C6CE',
       'border-width': '0px',
+      'z-index': 10,
     },
   },
   {
     selector: '.port',
     css: {
       'border-width': '0px',
+      'z-index': 10,
     },
   },
   {
@@ -110,6 +115,7 @@ export const ELEMENTS_STYLE = [
     css: {
       'background-color': '#F9C011',
       'border-width': '0px',
+      'z-index': 10,
     },
   },
   {
