@@ -1,10 +1,11 @@
 import NodeShape = cytoscape.Css.NodeShape;
+import { Stylesheet } from 'cytoscape';
 
-export const ELEMENTS_STYLE = [
+export const ELEMENTS_STYLE: Stylesheet[] = [
   {
     selector: 'node',
     css: {
-      shape: (node) => nodeShape(node),
+      shape: node => nodeShape(node),
       width: 'data(width)',
       height: 'data(height)',
       content: 'data(label)',
@@ -13,13 +14,16 @@ export const ELEMENTS_STYLE = [
       'border-color': 'black',
       'border-width': '2px',
       'border-style': 'solid',
-      "fontSize": 16,
-      'ghost': 'no',
+      'font-size': 16,
+      ghost: 'no',
       'text-wrap': 'wrap',
       'text-valign': 'top',
       'text-halign': 'center',
       'text-margin-y': 20,
-      'padding': '10px',
+      'padding-left': '10px',
+      'padding-right': '10px',
+      'padding-top': '10px',
+      'padding-bottom': '10px',
       'z-index': 1,
     },
   },
@@ -40,7 +44,6 @@ export const ELEMENTS_STYLE = [
       opacity: 1,
       width: 1.5,
       'line-color': 'black',
-      'z-compound-depth': 'top',
       'source-arrow-color': 'black',
       'source-arrow-fill': 'hollow',
       'source-arrow-shape': 'tee',
@@ -48,20 +51,24 @@ export const ELEMENTS_STYLE = [
       'target-arrow-fill': 'hollow',
       'target-arrow-shape': 'triangle-backcurve',
       'arrow-scale': 2,
+      // @ts-ignore: cytoscape type definitions are out of date
+      'z-compound-depth': 'top',
     },
   },
   {
     selector: '.unbundled',
     css: {
       'curve-style': 'unbundled-bezier',
+      // @ts-ignore: cytoscape type definitions are out of date
       'source-endpoint': '90deg',
+      // @ts-ignore: cytoscape type definitions are out of date
       'target-endpoint': '270deg',
     },
   },
   {
     selector: '.pod',
     css: {
-      'ghost': 'yes',
+      ghost: 'yes',
       'ghost-opacity': 1,
       'ghost-offset-x': 10,
       'ghost-offset-y': 10,
@@ -121,11 +128,12 @@ export const ELEMENTS_STYLE = [
   {
     selector: '[owner]',
     css: {
-      "visibility": "hidden",
+      // @ts-ignore: cytoscape type definitions are out of date
+      visibility: 'hidden',
     },
   },
 ];
 
-function nodeShape(node):NodeShape {
-  return(node.data('shape'))
+function nodeShape(node): NodeShape {
+  return node.data('shape');
 }

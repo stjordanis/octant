@@ -1,11 +1,8 @@
 import {storiesOf} from '@storybook/angular';
-import {ELEMENTS_STYLE} from "./graph.data";
 import {createEdges, establishRelations, REAL_DATA} from "./graph.real.data";
 import {object} from "@storybook/addon-knobs";
 import {
-  BaseShape,
   Deployment,
-  Edge,
   Pod,
   Port,
   ReplicaSet,
@@ -13,7 +10,9 @@ import {
   Service,
   ServiceAccount,
   Shape,
-} from "../app/modules/shared/components/presentation/cytoscape2/shape";
+} from "../app/modules/shared/components/presentation/cytoscape2/shapes";
+import {BaseShape} from "../app/modules/shared/components/presentation/cytoscape2/base.shape";
+import {Edge} from "../app/modules/shared/components/presentation/cytoscape2/edges";
 
 const layout = {name: 'cose-bilkent', padding: 30, fit: false, animateFilter: () => false};
 
@@ -21,8 +20,6 @@ const zoom = {
   min: 0.1,
   max: 2.0,
 };
-
-const style = ELEMENTS_STYLE;
 
 storiesOf('Resources', module).add('using ports', () => {
   const oldShapesWithPorts: BaseShape[] = [
@@ -51,7 +48,6 @@ storiesOf('Resources', module).add('using ports', () => {
       elements: eles,
       layout: layout,
       zoom: zoom,
-      style: style,
     },
     template: `
       <div class="main-container">
@@ -60,8 +56,7 @@ storiesOf('Resources', module).add('using ports', () => {
                   <app-cytoscape2
                     [elements]="elements" 
                     [layout]="layout" 
-                    [zoom]="zoom" 
-                    [style]="style">
+                    [zoom]="zoom"> 
                   </app-cytoscape2>
               </div>
           </div>
@@ -83,7 +78,6 @@ storiesOf('Resources', module).add('backend data', () => {
       elements: eles,
       layout: layout,
       zoom: zoom,
-      style: style,
     },
     template: `
       <div class="main-container">
@@ -92,8 +86,7 @@ storiesOf('Resources', module).add('backend data', () => {
                   <app-cytoscape2
                     [elements]="elements" 
                     [layout]="layout" 
-                    [zoom]="zoom" 
-                    [style]="style">
+                    [zoom]="zoom"> 
                   </app-cytoscape2>
               </div>
           </div>

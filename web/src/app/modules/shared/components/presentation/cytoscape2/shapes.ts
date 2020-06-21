@@ -1,39 +1,4 @@
-
-export abstract class BaseShape {
-  protected constructor(public id: string, public kind: string) {
-  }
-
-  toNode(shapes: BaseShape[]) {}
-}
-
-export class Edge extends BaseShape {
-
-  constructor( id: string,
-                  public sourceId: string,
-                  public targetId: string,
-                  public classes?: string ) {
-    super(id, 'Edge');
-  }
-
-  toNode(shapes: BaseShape[]) {
-    return {
-      data: {
-        id: this.id,
-        source: this.sourceId,
-        target: this.targetId,
-      },
-      group: 'edges',
-      removed: false,
-      selected: false,
-      selectable: true,
-      locked: false,
-      grabbable: true,
-      pannable: false,
-      classes: this.classes
-    }
-  }
-
-}
+import {BaseShape} from "./base.shape";
 
 export abstract class Shape extends BaseShape {
   x: number;

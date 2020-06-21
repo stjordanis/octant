@@ -18,6 +18,7 @@ import cytoscape, { NodeSingular, SingularData, Stylesheet } from 'cytoscape';
 import { hideChildren, positionChildren } from './octant.layout';
 import coseBilkent from 'cytoscape-cose-bilkent';
 import octant from './octant.layout';
+import { ELEMENTS_STYLE } from './octant.style';
 
 cytoscape.use(coseBilkent);
 cytoscape('layout', 'octant', octant);
@@ -40,13 +41,12 @@ cytoscape('layout', 'octant', octant);
 export class Cytoscape2Component implements OnChanges {
   @ViewChild('cy', { static: true }) private cy: ElementRef;
   @Input() public elements: any;
-  @Input() public style: Stylesheet[];
   @Input() public layout: any;
   @Input() public zoom: any;
-
   @Output() select: EventEmitter<any> = new EventEmitter<any>();
 
   cytoscape: cytoscape.Core;
+  style: Stylesheet[] = ELEMENTS_STYLE;
   applied = false;
   moveStarted = false;
 

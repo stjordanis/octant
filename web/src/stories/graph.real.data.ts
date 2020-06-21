@@ -1,4 +1,6 @@
-import {BaseShape, Edge, Shape} from "../app/modules/shared/components/presentation/cytoscape2/shape";
+import {Shape} from "../app/modules/shared/components/presentation/cytoscape2/shapes";
+import {BaseShape} from "../app/modules/shared/components/presentation/cytoscape2/base.shape";
+import {Edge} from "../app/modules/shared/components/presentation/cytoscape2/edges";
 
 type BackendEdgeDef= {
   node: string,
