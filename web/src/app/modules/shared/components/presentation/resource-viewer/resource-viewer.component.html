@@ -2,14 +2,24 @@
   <div class="clr-row">
     <div class="clr-col-9">
       <div class="view-container">
-        <app-cytoscape
-          [elements]="graphData"
-          [layout]="layout"
-          [zoom]="zoom"
-          [style]="style"
-          (select)="nodeChange($event)"
-        >
-        </app-cytoscape>
+        <div style="height: 25%;">
+          <app-cytoscape
+            [elements]="graphData"
+            [layout]="layout"
+            [zoom]="zoom"
+            [style]="style"
+            (select)="nodeChange($event)"
+          >
+          </app-cytoscape>
+        </div>
+        <div style="height: 75%;">
+          <app-cytoscape2
+            [elements]="graphData2"
+            [layout]="layout2"
+            [zoom]="zoom"
+          >
+          </app-cytoscape2>
+        </div>
       </div>
     </div>
     <div class="clr-col-3">

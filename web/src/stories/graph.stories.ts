@@ -9,8 +9,8 @@ import {
   Secret,
   Service,
   ServiceAccount,
-  Shape,
 } from "../app/modules/shared/components/presentation/cytoscape2/shapes";
+import {ShapeUtils} from "../app/modules/shared/components/presentation/cytoscape2/shape.utils";
 import {BaseShape} from "../app/modules/shared/components/presentation/cytoscape2/base.shape";
 import {Edge} from "../app/modules/shared/components/presentation/cytoscape2/edges";
 
@@ -66,7 +66,7 @@ storiesOf('Resources', module).add('using ports', () => {
 });
 
 storiesOf('Resources', module).add('backend data', () => {
-  let newShapes= Object.entries(REAL_DATA.nodes).map(([key, value]) => Shape.fromDataStream( key, value));
+  let newShapes= Object.entries(REAL_DATA.nodes).map(([key, value]) => ShapeUtils.fromDataStream( key, value));
 
   createEdges(newShapes, REAL_DATA.edges);
   newShapes= establishRelations(newShapes);

@@ -1,11 +1,12 @@
-import {BaseShape} from "./base.shape";
+import { BaseShape } from './base.shape';
 
 export class Edge extends BaseShape {
-
-  constructor( id: string,
-               public sourceId: string,
-               public targetId: string,
-               public classes?: string ) {
+  constructor(
+    id: string,
+    public sourceId: string,
+    public targetId: string,
+    public classes?: string
+  ) {
     super(id, 'Edge');
   }
 
@@ -23,8 +24,7 @@ export class Edge extends BaseShape {
       locked: false,
       grabbable: true,
       pannable: false,
-      classes: this.classes
-    }
+      classes: this.classes,
+    };
   }
-
 }

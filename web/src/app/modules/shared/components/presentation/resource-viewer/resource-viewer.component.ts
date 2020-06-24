@@ -17,6 +17,11 @@ import {
   View,
 } from 'src/app/modules/shared/models/content';
 import { ElementsDefinition, Stylesheet } from 'cytoscape';
+import {
+  createEdges,
+  establishRelations,
+} from '../../../../../../stories/graph.real.data';
+import { ShapeUtils } from '../cytoscape2/shape.utils';
 
 const statusColorCodes = {
   ok: '#60b515',
@@ -54,9 +59,16 @@ export class ResourceViewerComponent implements OnChanges, AfterViewInit {
     animate: false,
   };
 
+  layout2 = {
+    name: 'cose-bilkent',
+    padding: 30,
+    fit: false,
+    animateFilter: () => false,
+  };
+
   zoom = {
-    min: 0.5,
-    max: 2.0,
+    min: 0.25,
+    max: 4.0,
   };
 
   style: Stylesheet[] = [
@@ -106,6 +118,7 @@ export class ResourceViewerComponent implements OnChanges, AfterViewInit {
   ];
 
   graphData: ElementsDefinition;
+  graphData2: ElementsDefinition;
 
   private afterFirstChange: boolean;
 
@@ -114,6 +127,7 @@ export class ResourceViewerComponent implements OnChanges, AfterViewInit {
   ngAfterViewInit(): void {
     if (this.afterFirstChange) {
       this.graphData = this.generateGraphData();
+      this.graphData2 = this.generateGraphData2();
     }
   }
 
@@ -127,12 +141,29 @@ export class ResourceViewerComponent implements OnChanges, AfterViewInit {
       this.currentView = changes.view.currentValue as ResourceViewerView;
       this.select(this.currentView.config.selected);
       this.graphData = this.generateGraphData();
+      this.graphData2 = this.generateGraphData2();
       this.afterFirstChange = true;
     }
   }
 
   nodeChange(event) {
     this.select(event.id);
+  }
+
+  generateGraphData2(): ElementsDefinition {
+
+    let newShapes = Object.entries(
+      this.currentView.config.nodes
+    ).map(([key, value]) => ShapeUtils.fromDataStream(key, value));
+
+    createEdges(newShapes, this.currentView.config.edges);
+    newShapes = establishRelations(newShapes);
+
+    // @ts-ignore: temporary
+    const allShapes: ElementsDefinition = newShapes.map(
+      shape => shape && shape.toNode(newShapes)
+    );
+    return allShapes;
   }
 
   generateGraphData() {
